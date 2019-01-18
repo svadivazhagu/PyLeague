@@ -5,7 +5,11 @@ import pymongo
 
 
 #Establishing default values if need to be used for testing features.
-SUMMONER_NAME = 'Doublelift'
+SUMMONER_NAMES = ['TF Blade', 'SHERNFIRE', 'Santorin', 'Humble Diligent', 'EricZYang', 'Vu1c4n', 'ULookSoCharming', 'deftIy',
+                  'Johnsun', 'Pobelter', 'Nugeek', 'ashketchups', 'Winter', 'NintendudeX', 'Soulmario', 'Competition9', 'duoking1',
+                  'Dragoonsmash', 'Jurassiq', '2p0', 'Niles', 'Repfix', '5fire', 'insanityxxx', 'Tactical']
+
+
 SUMMONER_REGION = 'na1'
 
 #load api key in
@@ -26,7 +30,11 @@ if "db" in db_list:
     print("db exists")
 col = db["champs"]
 
-summoner_by_name = watcher.summoner.by_name(SUMMONER_REGION, SUMMONER_NAME)
+#Code to collect and push 25 challenger players to Mongo ALREADY DONE
+# for i in SUMMONER_NAMES:
+#     summoner = watcher.summoner.by_name(SUMMONER_REGION, i)
+#     db["proPlayers"].insert_one(summoner)
+
 #x = col.insert(summoner_by_name)
 
 #request for summonerByName() on Doublelift
