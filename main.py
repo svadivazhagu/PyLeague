@@ -12,16 +12,21 @@ SUMMONER_REGION = 'na1'
 with open('key.txt', 'r') as key:
     API_KEY = key.read().replace('\n', '')
 
+#load atlas key in
+with open('atlas.txt', 'r') as key:
+    ATLAS_URI = key.read().replace('\n', '')
+
 watcher = RiotWatcher(API_KEY, v4=True)
-client = pymongo.MongoClient("mongodb://localhost:27017/")
-db = client["newdb"]
+client = pymongo.MongoClient(ATLAS_URI)
+
+db = client.test
 
 db_list = client.list_database_names()
 if "db" in db_list:
     print("db exists")
-col = db["summonerNames"]
+col = db["champs"]
 
-# summoner_by_name = watcher.summoner.by_name(SUMMONER_REGION, SUMMONER_NAME)
+summoner_by_name = watcher.summoner.by_name(SUMMONER_REGION, SUMMONER_NAME)
 #x = col.insert(summoner_by_name)
 
 #request for summonerByName() on Doublelift
@@ -31,8 +36,16 @@ col = db["summonerNames"]
 version = (watcher.data_dragon.versions_for_region(SUMMONER_REGION))['v']
 
 static_champ_list = watcher.data_dragon.champions(version, True)
-for x in col.find():
-    print(x)
+
+data = static_champ_list['data']
+
+champList = []
+
+for key in data.keys():
+   champList.append(data[key])
+
+x = col.insert_many(champList)
+
 
 
 
