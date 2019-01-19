@@ -9,7 +9,7 @@
     Time in Minutes
 </div>
 <div id="teambuttons" class='filter-title'>
-   Team:
+    Team:
 </div>
 
 <script>
@@ -34,13 +34,13 @@
         .range([HEIGHT, 0])
 
 
-
     function getClass(d) {
         let className = "p" + d.participantId + " circle " + "t" + (Math.floor(d.timestamp / 900000))
         let teamClass = parseInt(d.participantId) < 6 ? " team1" : " team2";
         className += teamClass
-        return className 
+        return className
     }
+
     var colors = d3.scaleOrdinal(d3.schemeCategory10);
     var line1 = d3.line()
         .x(d => xScale(parseFloat(d.x)))
@@ -56,65 +56,73 @@
     fetch('http://localhost:8080/partFrame.csv', { 'Access-Control-Allow-Origin': '*' })
         .then(result => {
             return result.text();
-        }).then(result => {
-            console.log(result)
-            var data = d3.csvParse(result)
-
-
-            for (let i = 1; i < 11; i++) {
-                let filtered = []
-                for (let j = 0; j < data.length; j++) {
-                    if (data[j].participantId === "" + i && data[j].x !== 'NaN')
-                        filtered.push(data[j])
-                }
-
-                svg.append('path')
-                    .datum(filtered)
-                    .attr('class', 'line' + ' l' + i)
-                    .attr('d', line1)
-                    .attr('style', 'stroke: none; fill: none; stroke-width: 3')
-            }
-            var circles = svg.selectAll('positions')
-                .data(data)
-                .enter()
-                .append('circle')
-                .attr('class', d => getClass(d))
-                .attr('cx', d => xScale(parseFloat(d.x)))
-                .attr('cy', d => yScale(parseFloat(d.y)))
-                .attr('r', 10)
-                .attr('id', d => "p" + d.participantId)
-                .attr('fill', d => colors(d.participantId))
-                .on('mouseover', function (d) {
-
-                    div.transition()
-                        .duration(200)
-                        .style("opacity", .9);
-                    div.html("ID: " + d.participantId + "<br/>Level: " + d.level)
-                        .style("left", (d3.event.pageX) + "px")
-                        .style("top", (d3.event.pageY - 28) + "px");
-
-
-                    d3.selectAll('.circle')
-                        .attr('fill', 'rgba(0, 0, 0, 0.1)')
-
-                    d3.selectAll('.p' + d.participantId)
-                        .attr('fill', d => colors(d.participantId))
-
-                    d3.selectAll('.l' + d.participantId)
-                        .attr('style', 'stroke:' + colors(d.participantId + "") + '; ' + "; fill: none; stroke-width: 3")
-
-
-                }).on('mouseout', function (d) {
-                    d3.selectAll('.circle')
-                        .attr('fill', d => colors(d.participantId))
-
-                    d3.selectAll('.l' + d.participantId)
-                        .attr('style', 'stroke: none; fill: none; stroke-width: 3')
-
-                    div.transition()
-                        .duration(500)
-                        .style("opacity", 0);
+        }).then(movementText => {
+            let next = fetch('http://localhost:8080/eventFrame.csv')
+                .then(events => {
+                    return events.text();
                 })
+                .then(eventsText => {
+                    var eventList = d3.csvParse(eventsText)
+                    var movementList = d3.csvParse(movementText)
+                    console.log(eventList.length, movementList.length);
+                    for (let i = 1; i < 11; i++) {
+                        let filtered = []
+                        for (let j = 0; j < movementList.length; j++) {
+                            if (movementList[j].participantId === "" + i && movementList[j].x !== 'NaN')
+                                filtered.push(movementList[j])
+                        }
+
+                        svg.append('path')
+                            .datum(filtered)
+                            .attr('class', 'line' + ' l' + i)
+                            .attr('d', line1)
+                            .attr('style', 'stroke: none; fill: none; stroke-width: 3')
+                    }
+                    svg.selectAll('positions')
+                        .data(movementList)
+                        .enter()
+                        .append('circle')
+                        .attr('class', d => getClass(d))
+                        .attr('cx', d => xScale(parseFloat(d.x)))
+                        .attr('cy', d => yScale(parseFloat(d.y)))
+                        .attr('r', 10)
+                        .attr('id', d => "p" + d.participantId)
+                        .attr('fill', d => colors(d.participantId))
+                        .on('mouseover', function (d) {
+
+                            // div.transition()
+                            //     .duration(200)
+                            //     .style("opacity", .9);
+                            // div.html("ID: " + d.participantId + "<br/>Level: " + d.level)
+                            //     .style("left", (d3.event.pageX) + "px")
+                            //     .style("top", (d3.event.pageY - 28) + "px");
+
+
+                            d3.selectAll('.circle')
+                                .attr('fill', 'rgba(0, 0, 0, 0.1)')
+
+                            d3.selectAll('.p' + d.participantId)
+                                .attr('fill', d => colors(d.participantId))
+
+                            d3.selectAll('.l' + d.participantId)
+                                .attr('style', 'stroke:' + colors(d.participantId + "") + '; ' + "; fill: none; stroke-width: 3")
+
+
+                        })
+                        .on('mouseout', function () {
+                            d3.selectAll('.circle')
+                                .attr('fill', d => colors(d.participantId))
+
+                            d3.selectAll('.line')
+                                .attr('style', 'stroke: none; fill: none; stroke-width: 3')
+
+                            div.transition()
+                                .duration(500)
+                                .style("opacity", 0);
+                        })
+
+                })
+
         });
 
     var buttons = d3.select('#timebuttons').selectAll('timePeriodButton')
