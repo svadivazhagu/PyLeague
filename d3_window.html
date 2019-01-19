@@ -1,13 +1,22 @@
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <link rel="stylesheet" type="text/css" href="d3.css">.
 
-<svg id='vis' class='svg-format'></svg>
+<svg id='vis' class='svg-format'></svg><br />
+<div>
+    <h3>Filter Buttons</h3>
+</div>
+<div id="timebuttons" class='filter-title'>
+    Time in Minutes
+</div>
+<div id="teambuttons" class='filter-title'>
+   Team:
+</div>
 
 <script>
     console.log(d3); // test if d3 is loaded
 
-    const WIDTH = 800;
-    const HEIGHT = 800;
+    const WIDTH = 700;
+    const HEIGHT = 700;
     var svg = d3.select('body').select('#vis')
         .attr('width', WIDTH)
         .attr('height', HEIGHT)
@@ -24,14 +33,24 @@
         .domain([0, 15000])
         .range([HEIGHT, 0])
 
-    // var partColor = d3.scaleLinear()
-    //     .domain([1, 10])
-    //     .range(['#000000', '#FF00FF'])
+
+
+    function getClass(d) {
+        let className = "p" + d.participantId + " circle " + "t" + (Math.floor(d.timestamp / 900000))
+        let teamClass = parseInt(d.participantId) < 6 ? " team1" : " team2";
+        className += teamClass
+        return className 
+    }
     var colors = d3.scaleOrdinal(d3.schemeCategory10);
     var line1 = d3.line()
         .x(d => xScale(parseFloat(d.x)))
         .y(d => yScale(parseFloat(d.y)))
 
+
+    // Define the div for the tooltip
+    var div = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
 
     // style='background-image: url("http:\\\\ddragon.leagueoflegends.com\\cdn\\6.8.1\\img\\map\\map11.png")'
     fetch('http://localhost:8080/partFrame.csv', { 'Access-Control-Allow-Origin': '*' })
@@ -48,7 +67,7 @@
                     if (data[j].participantId === "" + i && data[j].x !== 'NaN')
                         filtered.push(data[j])
                 }
-     
+
                 svg.append('path')
                     .datum(filtered)
                     .attr('class', 'line' + ' l' + i)
@@ -59,7 +78,7 @@
                 .data(data)
                 .enter()
                 .append('circle')
-                .attr('class', d => "p" + d.participantId + " circle")
+                .attr('class', d => getClass(d))
                 .attr('cx', d => xScale(parseFloat(d.x)))
                 .attr('cy', d => yScale(parseFloat(d.y)))
                 .attr('r', 10)
@@ -67,8 +86,16 @@
                 .attr('fill', d => colors(d.participantId))
                 .on('mouseover', function (d) {
 
+                    div.transition()
+                        .duration(200)
+                        .style("opacity", .9);
+                    div.html("ID: " + d.participantId + "<br/>Level: " + d.level)
+                        .style("left", (d3.event.pageX) + "px")
+                        .style("top", (d3.event.pageY - 28) + "px");
+
+
                     d3.selectAll('.circle')
-                        .attr('fill', 'blacks')
+                        .attr('fill', 'rgba(0, 0, 0, 0.1)')
 
                     d3.selectAll('.p' + d.participantId)
                         .attr('fill', d => colors(d.participantId))
@@ -81,8 +108,58 @@
                     d3.selectAll('.circle')
                         .attr('fill', d => colors(d.participantId))
 
-                        d3.selectAll('.l' + d.participantId)
-                        .attr('style','stroke: none; fill: none; stroke-width: 3')
+                    d3.selectAll('.l' + d.participantId)
+                        .attr('style', 'stroke: none; fill: none; stroke-width: 3')
+
+                    div.transition()
+                        .duration(500)
+                        .style("opacity", 0);
                 })
+        });
+
+    var buttons = d3.select('#timebuttons').selectAll('timePeriodButton')
+        .data(["0-15", "15-25", "25-35"])
+        .enter()
+        .append('button')
+        .attr('class', "button")
+        .text(d => d)
+        .on('click', function (d) {
+            d3.selectAll('.circle')
+                .attr('fill', 'none')
+            switch (d) {
+                case "0-15":
+                    d3.selectAll('.t0')
+                        .attr('fill', d => colors(d.participantId))
+                    break;
+                case "15-25":
+                    d3.selectAll('.t1')
+                        .attr('fill', d => colors(d.participantId))
+                    break;
+                case "25-35":
+                    d3.selectAll('.t2')
+                        .attr('fill', d => colors(d.participantId))
+                    break;
+
+            }
+        })
+
+
+    var buttons2 = d3.select('#teambuttons').selectAll('teamButtons')
+        .data(["Team 1", "Team 2"])
+        .enter()
+        .append('button')
+        .attr('class', "button")
+        .text(d => d)
+        .on('click', function (d) {
+            d3.selectAll('.circle')
+                .attr('fill', 'none')
+            if (d === 'Team 1') {
+                d3.selectAll('.team1')
+                    .attr('fill', d => colors(d.participantId))
+            } else {
+                d3.selectAll('.team2')
+                    .attr('fill', d => colors(d.participantId))
+
+            }
         })
 </script>

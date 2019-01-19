@@ -79,9 +79,9 @@ timestamp, type, participantId, itemId
 
 Participant Frames
 timestamp, currentGold, dominionScore, jungleMinionsKilled, level, minionsKilled, participantId, position, teamScore, totalGold, xp
-"""
-with open("results.json", 'w') as outputFile:
-    outputFile.write(str(list(matchTimeline.find())))
+# """
+# with open("results.json", 'w') as outputFile:
+#     outputFile.write(str(list(matchTimeline.find())))
 
 # res = pd.DataFrame(list(matches.find()))
 
