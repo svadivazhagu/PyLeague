@@ -22,7 +22,7 @@
     const WIDTH = 700;
     const HEIGHT = 600;
     var svg = d3.select('body').select('#vis')
-        .attr('width', 800)
+        .attr('width', 1200)
         .attr('height', 700)
 
     var scale = d3.scaleLinear()
@@ -216,6 +216,7 @@
                             .attr('d', line1)
                             .attr('style', 'stroke: none; fill: none; stroke-width: 3')
                     }
+
                     svg.selectAll('positions')
                         .data(movementList)
                         .enter()
@@ -278,7 +279,7 @@
                         })
 
                     svg.selectAll('text')
-                        .data([0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90])
+                        .data([0, 5, 10, 15, 20])
                         .enter()
                         .append('text')
                         .attr('x', d => timeScale(d * 60000) + 3)
@@ -287,7 +288,7 @@
                         .style('fill', 'black')
 
                     svg.selectAll('tick')
-                        .data([0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90])
+                        .data([0, 5, 10, 15, 20])
                         .enter()
                         .append('line')
                         .attr('x1', d => timeScale(d * 60000))
@@ -304,6 +305,142 @@
                         .attr('x', 0)
                         .attr('y', (d, i) => 620 + 15 * i)
                         .text(d => d);
+
+                    svg.selectAll('legend')
+                        .data([0])
+                        .enter()
+                        .append('rect')
+                        .attr('x', 710)
+                        .attr('y', 10)
+                        .attr('width', 165)
+                        .attr('height', 230)
+                        .attr('stroke', 'black')
+                        .attr('fill', 'white')
+
+                    svg.selectAll("legendCircles")
+                        .data([1, 2, 3, 4, 5, 6, 7, 8, 9])
+                        .enter()
+                        .append('circle')
+                        .attr('class', d => 'legend')
+                        .attr('cx', 725)
+                        .attr('cy', (d, i) => 25 + i * 25)
+                        .attr('r', 10)
+                        .attr('fill', d => colors(d))
+
+                    svg.selectAll('legendText')
+                        .data([1, 2, 3, 4, 5, 6, 7, 8, 9])
+                        .enter()
+                        .append('text')
+                        .attr('class', d => 'legend')
+                        .attr('x', 740)
+                        .attr('y', (d, i) => 28 + i * 25)
+                        .text(d => getSummonerName(d))
+
+                    svg.selectAll('.legend')
+                        .on('mouseover', function (d) {
+                            highlightPlayer({
+                                participantId: d
+                            })
+                        })
+                        .on('mouseout', function (d) {
+                            unHighlightPlayer({
+                                participantId: d
+                            })
+                        })
+
+
+                    svg.selectAll('teamview')
+                        .data([0])
+                        .enter()
+                        .append('rect')
+                        .attr('x', 710)
+                        .attr('y', 260)
+                        .attr('width', 165)
+                        .attr('height', 100)
+                        .attr('stroke', 'black')
+                        .attr('fill', 'white')
+
+
+
+                    svg.selectAll("legendRect")
+                        .data(["Team 1", "Team 2"])
+                        .enter()
+                        .append('rect')
+                        .attr('class', d => 'hover hoversq hoversq' + d.slice(5, 6))
+                        .attr('fill', d => d === "Team 1" ? 'navy' : 'maroon')
+                        .attr("rx", 6)
+                        .attr("ry", 6)
+                        .attr('x', 725)
+                        .attr('y', (d, i) => 290 + i * 30)
+                        .attr('width', 85)
+                        .attr('height', 25)
+
+
+                    svg.selectAll("legend2Label")
+                        .data([0])
+                        .enter()
+                        .append("text")
+                        .attr('x', 720)
+                        .attr('y', 280)
+                        .attr('fill', 'black')
+                        .text('Hover to view')
+
+                    svg.selectAll('legend2Text')
+                        .data(["Team 1", "Team 2"])
+                        .enter()
+                        .append('text')
+                        .attr('class', 'button hover')
+                        .attr('x', 740)
+                        .attr('y', (d, i) => 310 + i * 30)
+                        .style('fill', 'white')
+                        .text(d => d)
+
+
+
+                    d3.selectAll('.hover')
+                        .on('mouseover', function (d) {
+                            d3.selectAll('.circle')
+                                .attr('fill', 'none')
+                            d3.selectAll('.event')
+                                .attr('stroke', 'none')
+                            if (d === 'Team 1') {
+                                d3.selectAll('.team1')
+                                    .attr('fill', d => colors(d.participantId))
+                                    .attr('stroke', d => colors(d.participantId || d.killerId || d.creatorId))
+                            } else {
+                                d3.selectAll('.team2')
+                                    .attr('fill', d => colors(d.participantId))
+                                    .attr('stroke', d => colors(d.participantId || d.killerId || d.creatorId))
+
+                            }
+
+                            d3.selectAll('.circle')
+                                .attr('stroke', 'none')
+
+                            if (d === "Team 1") {
+                                d3.selectAll('.hoversq1')
+                                    .attr('fill', '	#2E5894')
+
+                            } else {
+                                d3.selectAll('.hoversq2')
+                                    .attr('fill', 'coral')
+                            }
+
+
+
+                        })
+                        .on('mouseout', function (d) {
+                            unHighlightPlayer({
+                                participantId: d
+                            })
+
+                            d3.selectAll('.hoversq')
+                                .attr('fill', d => d === "Team 1" ? 'navy' : 'maroon')
+
+                        })
+
+
+
                 });
 
 

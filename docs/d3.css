@@ -7,7 +7,17 @@
 }
 
 .button {
-    background-color: 'white';
+    background-color: 'gray';
+    border-radius: 3px;
+    padding: 3px;
+    margin: 5px;
+    width: 100px;
+    font-size: 20px;
+    color: white
+}
+
+.hover {
+    background-color: 'gray';
     border-radius: 3px;
     padding: 3px;
     margin: 5px;

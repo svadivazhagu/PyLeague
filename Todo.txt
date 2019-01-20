@@ -1,0 +1,2 @@
+- Legend
+- Combine events and participant data to know where the user is.
