@@ -13,7 +13,6 @@
 </div>
 
 <script>
-    console.log(d3); // test if d3 is loaded
     d3.selection.prototype.moveToFront = function () {
         return this.each(function () {
             this.parentNode.appendChild(this);
@@ -87,21 +86,18 @@
             return result.text()
         }).then(result => {
             let json = JSON.parse(result);
-            console.log("Itme Map Result: ", json["1001"])
             itemNameMap = json;
         })
 
     var summonerNameMap = {}
-    fetch('https://svadivazhagu.github.io/PyLeague/PyLeague/participants.json')
+    fetch('https://svadivazhagu.github.io/PyLeague/participants.json')
         .then(result => result.text())
         .then(result => {
             let json = JSON.parse(result);
-            console.log(json)
             summonerNameMap = json;
         })
 
     function getSummonerName(pId) {
-        console.log(pId);
         return summonerNameMap[parseInt(pId)].summonerName;
     }
     function eventLabeler(d) {
@@ -207,7 +203,6 @@
                     eventList = d3.csvParse(eventsText)
                     movementList = d3.csvParse(movementText)
 
-                    // console.log(eventList.length, movementList.length);
                     for (let i = 1; i < 11; i++) {
                         let filtered = []
                         for (let j = 0; j < movementList.length; j++) {
@@ -259,7 +254,6 @@
                         })
                         // .attr('r', '10')
                         .on('mouseover', function (d) {
-                            console.log(d.participantId || d.killerId || d.creatorId);
                             div.transition()
                                 .duration(50)
                                 .style("opacity", 1);
