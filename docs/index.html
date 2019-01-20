@@ -1,7 +1,14 @@
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://svadivazhagu.github.io/PyLeague/d3.css">
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 <svg id='vis' class='svg-format'></svg><br />
+
+<body>
+    <div id="myDiv">
+        <!-- Plotly chart will be drawn inside this DIV -->
+    </div>
+</body>
 
 <script>
     d3.selection.prototype.moveToFront = function () {
@@ -298,17 +305,19 @@
                             })
                         });
 
-                    svg.selectAll('text')
+                    svg.selectAll('timelinetext')
                         .data([0, 5, 10, 15, 20])
                         .enter()
                         .append('text')
                         .attr('x', d => timeScale(d * 60000) + 3)
                         .attr('y', 690)
-                        .text(d => d + 'min')
+                        .text(d => {
+                            console.log("THIS IS FREAKING STUPID", d)
+                            return d + 'min';
+                        })
                         .style('fill', 'black')
 
                     svg.selectAll('tick')
-                        .moveToFront()
                         .data([0, 5, 10, 15, 20])
                         .enter()
                         .append('line')
@@ -327,21 +336,16 @@
                         .attr('y', (d, i) => 620 + 15 * i)
                         .text(d => d);
 
-
-
-
                     svg.selectAll('teamview')
                         .data([0])
                         .enter()
                         .append('rect')
                         .attr('x', 710)
-                        .attr('y', 260)
-                        .attr('width', 165)
-                        .attr('height', 100)
+                        .attr('y', 280)
+                        .attr('width', 125)
+                        .attr('height', 90)
                         .attr('stroke', 'black')
                         .attr('fill', 'white')
-
-
 
                     svg.selectAll("legendRect")
                         .data(["Team 1", "Team 2"])
@@ -351,8 +355,8 @@
                         .attr('fill', d => d === "Team 1" ? 'navy' : 'maroon')
                         .attr("rx", 6)
                         .attr("ry", 6)
-                        .attr('x', 725)
-                        .attr('y', (d, i) => 290 + i * 30)
+                        .attr('x', 720)
+                        .attr('y', (d, i) => 305 + i * 30)
                         .attr('width', 85)
                         .attr('height', 25)
 
@@ -361,8 +365,8 @@
                         .data([0])
                         .enter()
                         .append("text")
-                        .attr('x', 720)
-                        .attr('y', 280)
+                        .attr('x', 725)
+                        .attr('y', 300)
                         .attr('fill', 'black')
                         .text('Hover to view')
 
@@ -372,7 +376,7 @@
                         .append('text')
                         .attr('class', 'button hover')
                         .attr('x', 740)
-                        .attr('y', (d, i) => 310 + i * 30)
+                        .attr('y', (d, i) => 325 + i * 30)
                         .style('fill', 'white')
                         .text(d => d)
 
@@ -405,9 +409,6 @@
                                 d3.selectAll('.hoversq2')
                                     .attr('fill', 'coral')
                             }
-
-
-
                         })
                         .on('mouseout', function (d) {
                             unHighlightPlayer({
@@ -427,21 +428,22 @@
         .then(result => result.text())
         .then(result => {
             console.log(result)
-            let playerData = d3.csvParse(result);
-            console.log(playerData)
+            let playerData = JSON.parse(result);
+            console.log(playerData["1"])
+            let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
             svg.selectAll('legend')
                 .data([0])
                 .enter()
                 .append('rect')
                 .attr('x', 710)
                 .attr('y', 10)
-                .attr('width', 165)
-                .attr('height', 230)
+                .attr('width', 210)
+                .attr('height', 260)
                 .attr('stroke', 'black')
                 .attr('fill', 'white')
 
             svg.selectAll("legendCircles")
-                .data([1, 2, 3, 4, 5, 6, 7, 8, 9])
+                .data(numbers)
                 .enter()
                 .append('circle')
                 .attr('class', d => 'legend')
@@ -451,13 +453,22 @@
                 .attr('fill', d => colors(d))
 
             svg.selectAll('legendText')
-                .data([1, 2, 3, 4, 5, 6, 7, 8, 9])
+                .data(numbers)
                 .enter()
                 .append('text')
                 .attr('class', d => 'legend')
                 .attr('x', 740)
                 .attr('y', (d, i) => 28 + i * 25)
                 .text(d => getSummonerName(d))
+
+            svg.selectAll('legendChampText')
+                .data(numbers)
+                .enter()
+                .append('text')
+                .attr('x', 860)
+                .attr('y', (d, i) => 28 + i * 25)
+                .attr('fill', 'black')
+                .text(d => playerData[d].championId)
 
             svg.selectAll('.legend')
                 .on('mouseover', function (d) {
@@ -470,6 +481,19 @@
                         participantId: d
                     })
                 })
+
+            svg.select("teamDivider")
+                .moveToFront()
+                .data([0])
+                .enter()
+                .append('line')
+                .attr('x1', 720)
+                .attr('y1', 140)
+                .attr('x2', 920)
+                .attr('y2', 140)
+                .attr('stroke', 'black')
+                .attr('stroke-width', 3)
+                
         })
 
 
