@@ -1,5 +1,5 @@
 <script src="https://d3js.org/d3.v5.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://svadivazhagu.github.io/PyLeague/d3.css">.
+<link rel="stylesheet" type="text/css" href="https://svadivazhagu.github.io/PyLeague/d3.css">
 
 <svg id='vis' class='svg-format'></svg><br />
 <div>
@@ -104,7 +104,7 @@
         let date = new Date(parseInt(d.timestamp))
         var options = { minute: 'numeric', second: '2-digit' };
 
-        let tooltipLabel = `${date.toLocaleTimeString('en-US', options)} <br/>`;
+        let tooltipLabel = `<b>${date.toLocaleTimeString('en-US', options)}</b> <br/>`;
         if (d.type === 'ELITE_MONSTER_KILL') {
             tooltipLabel += `Monster Kill<br/>${getSummonerName(d.killerId)} killed ${d.monsterType}`
             svg.select('.timeline-map-dot')
