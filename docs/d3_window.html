@@ -1,0 +1,376 @@
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<link rel="stylesheet" type="text/css" href="d3.css">.
+
+<svg id='vis' class='svg-format'></svg><br />
+<div>
+    <h3>Filter Buttons</h3>
+</div>
+<div id="timebuttons" class='filter-title'>
+    Time in Minutes
+</div>
+<div id="teambuttons" class='filter-title'>
+    Team:
+</div>
+
+<script>
+    console.log(d3); // test if d3 is loaded
+    d3.selection.prototype.moveToFront = function () {
+        return this.each(function () {
+            this.parentNode.appendChild(this);
+        });
+    };
+
+    const WIDTH = 700;
+    const HEIGHT = 600;
+    var svg = d3.select('body').select('#vis')
+        .attr('width', 800)
+        .attr('height', 700)
+
+    var scale = d3.scaleLinear()
+        .domain([0, 15000])
+        .range([0, 1000])
+
+    var xScale = d3.scaleLinear()
+        .domain([0, 15000])
+        .range([0, WIDTH])
+
+    var yScale = d3.scaleLinear()
+        .domain([0, 15000])
+        .range([HEIGHT, 0])
+
+
+    function getClass(d) {
+        let className = "p" + d.participantId + " circle " + "t" + (Math.floor(d.timestamp / 900000))
+        let teamClass = parseInt(d.participantId) < 6 ? " team1" : " team2";
+        className += teamClass
+        return className
+    }
+
+    function highlightPlayer(d) {
+
+        d3.selectAll('.circle')
+            .attr('fill', 'rgba(0, 0, 0, 0)')
+
+        d3.selectAll('.p' + d.participantId)
+            .attr('fill', d => colors(d.participantId))
+
+        d3.selectAll('.l' + d.participantId)
+            .attr('style', 'stroke:' + colors(d.participantId + "") + '; ' + "; fill: none; stroke-width: 3")
+
+        d3.selectAll('.event')
+            .attr('stroke', 'rgba(0,0,0,0.1)')
+
+        d3.selectAll('.ev' + d.participantId)
+
+            .attr('stroke', d => colors(parseInt(d.participantId || d.killerId || d.creatorId)))
+
+    }
+
+    function unHighlightPlayer(d) {
+        d3.selectAll('.circle')
+            .attr('fill', d => colors(d.participantId))
+
+        d3.selectAll('.line')
+            .attr('style', 'stroke: none; fill: none; stroke-width: 3')
+        d3.selectAll('.event')
+            .moveToFront()
+            .attr('stroke', d => {
+                val = colors(parseInt(d.participantId || d.killerId || d.creatorId))
+                return val;
+            })
+
+    }
+
+    var itemNameMap = {}
+    fetch('https://svadivazhagu.github.io/items.json')
+        .then(result => {
+            return result.text()
+        }).then(result => {
+            let json = JSON.parse(result);
+            console.log("Itme Map Result: ", json["1001"])
+            itemNameMap = json;
+        })
+
+    var summonerNameMap = {}
+    fetch('http://svadivazhagu.github.io/participants.json')
+        .then(result => result.text())
+        .then(result => {
+            let json = JSON.parse(result);
+            console.log(json)
+            summonerNameMap = json;
+        })
+
+    function getSummonerName(pId) {
+        console.log(pId);
+        return summonerNameMap[parseInt(pId)].summonerName;
+    }
+    function eventLabeler(d) {
+        let date = new Date(parseInt(d.timestamp))
+        var options = { minute: 'numeric', second: '2-digit' };
+
+        let tooltipLabel = `${date.toLocaleTimeString('en-US', options)} <br/>`;
+        if (d.type === 'ELITE_MONSTER_KILL') {
+            tooltipLabel += `Monster Kill<br/>${getSummonerName(d.killerId)} killed ${d.monsterType}`
+            svg.select('.timeline-map-dot')
+
+                .transition()
+                .ease(d3.easeLinear)
+                .duration(100)
+                .attr('cx', xScale(d.x))
+                .attr('cy', yScale(d.y))
+                .attr('fill', eventColor['ELITE_MONSTER_KILL'])
+
+        } else if (d.type === 'CHAMPION_KILL') {
+            tooltipLabel += `Champion Kill<br/>${getSummonerName(d.killerId)} killed ${getSummonerName(d.victimId)}`
+            svg.select('.timeline-map-dot')
+                .moveToFront()
+                .transition()
+                .ease(d3.easeLinear)
+                .duration(100)
+                .attr('cx', xScale(d.x))
+                .attr('cy', yScale(d.y))
+                .attr('fill', eventColor['CHAMPION_KILL'])
+
+        } else if (d.type === 'ITEM_PURCHASED') {
+            tooltipLabel += `${getSummonerName(d.participantId)} bought ${d.itemId}`;
+
+        } else if (d.type === 'BUILDING_KILL') {
+            tooltipLabel += `Building Destroyed<br/>${getSummonerName(d.killerId)} destroyed  ${d.laneType} ${d.towerType}`
+            svg.select('.timeline-map-dot')
+                .moveToFront()
+                .transition()
+                .ease(d3.easeLinear)
+                .duration(100)
+                .attr('cx', xScale(d.x))
+                .attr('cy', yScale(d.y))
+                .attr('fill', eventColor['BUILDING_KILL'])
+
+        } else if (d.type === 'WARD_PLACED') {
+            tooltipLabel += `Ward Placed<br/>${getSummonerName(d.creatorId)} placed a ward`
+        }
+
+        div.html(tooltipLabel)
+            .style("left", (d3.event.pageX) + "px")
+            .style("top", (d3.event.pageY - 28) + "px");
+
+
+    }
+
+    var colors = d3.scaleOrdinal(d3.schemeCategory10);
+    var line1 = d3.line()
+        .x(d => xScale(parseFloat(d.x)))
+        .y(d => yScale(parseFloat(d.y)))
+    var timeScale = {};
+
+
+    // Define the div for the tooltip
+    var div = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+
+    svg.selectAll("timelineMapDot")
+        .data([0])
+        .enter()
+        .append('circle')
+        .attr('class', 'timeline-map-dot')
+        .attr('r', 20)
+        .attr('fill', 'white')
+
+    var good = ['WARD_PLACED', 'ELITE_MONSTER_KILL', 'BUILDING_KILL', 'CHAMPION_KILL'];
+    var eventColor = {
+        ELITE_MONSTER_KILL: 'purple',
+        BUILDING_KILL: 'black',
+        CHAMPION_KILL: 'maroon',
+        WARD_PLACED: 'cyan'
+    }
+
+    var typeHeightMap = {
+        ELITE_MONSTER_KILL: -30,
+        BUILDING_KILL: -15,
+        CHAMPION_KILL: 0,
+        WARD_PLACED: 15
+    }
+
+    var movementList = []
+    var eventList = []
+
+    // style='background-image: url("http:\\\\ddragon.leagueoflegends.com\\cdn\\6.8.1\\img\\map\\map11.png")'
+    fetch('https://svadivazhagu.github.io/partFrame.csv', { 'Access-Control-Allow-Origin': '*' })
+        .then(result => {
+            return result.text();
+        }).then(movementText => {
+            let next = fetch('https://svadivazhagu.github.io/eventFrame.csv')
+                .then(events => {
+                    return events.text();
+                })
+                .then(eventsText => {
+                    eventList = d3.csvParse(eventsText)
+                    movementList = d3.csvParse(movementText)
+
+                    // console.log(eventList.length, movementList.length);
+                    for (let i = 1; i < 11; i++) {
+                        let filtered = []
+                        for (let j = 0; j < movementList.length; j++) {
+                            if (movementList[j].participantId === "" + i && movementList[j].x !== 'NaN')
+                                filtered.push(movementList[j])
+                        }
+
+                        svg.append('path')
+                            .datum(filtered)
+                            .attr('class', 'line' + ' l' + i)
+                            .attr('d', line1)
+                            .attr('style', 'stroke: none; fill: none; stroke-width: 3')
+                    }
+                    svg.selectAll('positions')
+                        .data(movementList)
+                        .enter()
+                        .append('circle')
+                        .attr('class', d => getClass(d))
+                        .attr('cx', d => xScale(parseFloat(d.x)))
+                        .attr('cy', d => yScale(parseFloat(d.y)))
+                        .attr('r', 10)
+                        .attr('id', d => "p" + d.participantId)
+                        .attr('fill', d => colors(d.participantId))
+                        .on('mouseover', d => highlightPlayer(d, movementList))
+                        .on('mouseout', unHighlightPlayer)
+
+
+
+                    timeScale = d3.scaleLinear()
+                        .domain([parseFloat(eventList[0].timestamp), parseFloat(eventList[eventList.length - 1].timestamp)])
+                        .range([110, 700]);
+
+                    svg.selectAll('timeline')
+                        .data(eventList)
+                        .enter()
+                        .filter(d => {
+                            return good.includes(d.type) && parseInt(d.killerId) !== 0
+                        })
+                        .append('line')
+                        .attr('class', d => 'event ' + d.type + ' ev' + parseInt(d.participantId || d.killerId || d.creatorId) + (parseInt(d.participantId || d.killerId || d.creatorId) < 6 ? " team1" : " team2"))
+                        .attr('x1', d => timeScale(parseFloat(d.timestamp)))
+                        .attr('y1', d => 635 + typeHeightMap[d.type])
+                        .attr('x2', d => timeScale(parseFloat(d.timestamp)))
+                        .attr('y2', d => 650 + typeHeightMap[d.type])
+                        .attr('stroke-width', 6)
+                        .attr('stroke', d => {
+                            val = colors(parseInt(d.participantId || d.killerId || d.creatorId))
+                            return val;
+                        })
+                        // .attr('r', '10')
+                        .on('mouseover', function (d) {
+                            console.log(d.participantId || d.killerId || d.creatorId);
+                            div.transition()
+                                .duration(50)
+                                .style("opacity", 1);
+                            eventLabeler(d);
+
+
+                            highlightPlayer({
+                                participantId: parseInt(d.participantId || d.killerId || d.creatorId)
+                            })
+                        })
+                        .on('mouseout', function (d) {
+                            svg.select('.timeline-map-dot')
+                                .attr('fill', 'none')
+                            div.transition()
+                                .duration(500)
+                                .style("opacity", 0);
+
+
+                            unHighlightPlayer({
+                                participandId: parseInt(d.participantId || d.killerId || d.creatorId)
+                            })
+                        })
+
+                    svg.selectAll('text')
+                        .data([0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90])
+                        .enter()
+                        .append('text')
+                        .attr('x', d => timeScale(d * 60000) + 3)
+                        .attr('y', 680)
+                        .text(d => d + 'min')
+                        .style('fill', 'black')
+
+                    svg.selectAll('tick')
+                        .data([0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90])
+                        .enter()
+                        .append('line')
+                        .attr('x1', d => timeScale(d * 60000))
+                        .attr('y1', 610)
+                        .attr('x2', d => timeScale(d * 60000))
+                        .attr('y2', 680)
+                        .attr('stroke-width', 2)
+                        .attr('stroke', 'black')
+
+                    svg.selectAll('labels2')
+                        .data(["Monster Kills", "Building Kills", "Champion Kills", "Wards Placed"])
+                        .enter()
+                        .append('text')
+                        .attr('x', 0)
+                        .attr('y', (d, i) => 620 + 15 * i)
+                        .text(d => d);
+                });
+
+
+
+        });
+
+    var buttons = d3.select('#timebuttons').selectAll('timePeriodButton')
+        .data(["0-15", "15-25", "25-35"])
+        .enter()
+        .append('button')
+        .attr('class', "button")
+        .text(d => d)
+        .on('click', function (d) {
+            d3.selectAll('.circle')
+                .attr('fill', 'none')
+            switch (d) {
+                case "0-15":
+                    d3.selectAll('.t0')
+                        .attr('fill', d => colors(d.participantId))
+                    break;
+                case "15-25":
+                    d3.selectAll('.t1')
+                        .attr('fill', d => colors(d.participantId))
+                    break;
+                case "25-35":
+                    d3.selectAll('.t2')
+                        .attr('fill', d => colors(d.participantId))
+                    break;
+
+            }
+        })
+
+
+    var buttons2 = d3.select('#teambuttons').selectAll('teamButtons')
+        .data(["Team 1", "Team 2"])
+        .enter()
+        .append('button')
+        .attr('class', "button")
+        .text(d => d)
+        .on('click', function (d) {
+            d3.selectAll('.circle')
+                .attr('fill', 'none')
+            d3.selectAll('.event')
+                .attr('stroke', 'none')
+            if (d === 'Team 1') {
+                d3.selectAll('.team1')
+                    .attr('fill', d => colors(d.participantId))
+                    .attr('stroke', d => colors(d.participantId || d.killerId || d.creatorId))
+            } else {
+                d3.selectAll('.team2')
+                    .attr('fill', d => colors(d.participantId))
+                    .attr('stroke', d => colors(d.participantId || d.killerId || d.creatorId))
+
+            }
+
+            d3.selectAll('.circle')
+                .attr('stroke', 'none')
+        })
+
+
+
+
+
+</script>
