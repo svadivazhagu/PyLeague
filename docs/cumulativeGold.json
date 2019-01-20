@@ -1,1 +1,102 @@
-{"1": {    "accountId": "ZPs_PFiB7MCvKYnap9KIXbH8RNS3St1dAYPfrxypaV2vxQ",    "championId": "Vayne",    "goldIncome": [        500,        500,        563,        913,        1190,        1389,        1750,        2061,        2611,        2847,        3290,        3571,        3763,        4907,        5086,        5392,        5864,        6404,        6825,        7340,        7838,        8591    ],    "lane": "CARRY",    "minionsKilled": [        0,        0,        2,        13,        22,        26,        37,        48,        56,        59,        59,        65,        69,        83,        86,        91,        99,        102,        106,        122,        126,        129    ],    "participantId": 1,    "summonerId": "x-NJeeXfBxCCn9UcaWw26CjIAIQOBji00DQKltmEjr2aKIg",    "summonerName": "Johnsun"}, "2": {    "accountId": "hHXHCXvhVMduVosw6G2TZ40zgabF0EquhpcZy1LTn5BFIQ",    "championId": "Galio",    "goldIncome": [        500,        500,        626,        920,        1246,        1585,        2029,        2291,        2859,        3264,        4036,        4235,        4849,        5055,        5448,        6417,        6845,        7454,        8119,        8701,        9201,        9713    ],    "lane": "MIDDLE",    "minionsKilled": [        0,        0,        6,        13,        25,        35,        47,        55,        60,        74,        82,        87,        100,        105,        118,        129,        140,        151,        161,        163,        169,        172    ],    "participantId": 2,    "summonerId": "-pPcbaW-B_C6XF5ey3NMy8Tpn2UjOmts1LogHAAx9gwX",    "summonerName": "VVanderer"}, "3": {    "accountId": "uSLcGH8sDyRtlkh3vbk1sNZH3a8BQUcIRy8TMtqUnOWOpQ",    "championId": "Poppy",    "goldIncome": [        500,        500,        563,        783,        1076,        1380,        1734,        1957,        2261,        2460,        2822,        3043,        3467,        3779,        4289,        4669,        5463,        5885,        6367,        6629,        7400,        7587    ],    "lane": "TOP",    "minionsKilled": [        0,        0,        2,        8,        9,        17,        29,        32,        40,        44,        55,        60,        75,        86,        96,        103,        113,        113,        114,        115,        131,        135    ],    "participantId": 3,    "summonerId": "9EYom9UWXMaAZeL2nJhTAnuQlH_BKQeoY4uY6sH74USGDE8",    "summonerName": "Poppys Hammer"}, "4": {    "accountId": "5DDWnrkDGHaQLrGFLWuvTvrWhFnXmP9zggfP79hkOyUxLw",    "championId": "Gragas",    "goldIncome": [        500,        500,        621,        1055,        1934,        2216,        2601,        2809,        3164,        3651,        4345,        4876,        4999,        5861,        6145,        6584,        7152,        7340,        7798,        8270,        8880,        9467    ],    "lane": "JUNGLE",    "minionsKilled": [        0,        0,        0,        0,        0,        0,        0,        0,        1,        1,        1,        1,        1,        2,        3,        7,        8,        11,        13,        16,        22,        23    ],    "participantId": 4,    "summonerId": "pR85iEjN2sno-KL3dfnjwTUICOOd94ZSse3M5OIPGSgWqzE",    "summonerName": "Sarcasm Orgasm"}, "5": {    "accountId": "jG7tVA3DDBgiLMCef1BdPbOmN0kJEGXJ-sMD7jsBkdNsDA",    "championId": "Karma",    "goldIncome": [        500,        510,        573,        727,        912,        1056,        1239,        1384,        1645,        1790,        2154,        2288,        2472,        3146,        3320,        3455,        3711,        4090,        4345,        4685,        4985,        5369    ],    "lane": "SUPPORT",    "minionsKilled": [        0,        0,        0,        0,        0,        0,        1,        1,        2,        2,        2,        2,        5,        5,        5,        5,        9,        9,        11,        12,        12,        12    ],    "participantId": 5,    "summonerId": "_o8p8t4_eIYkwXmKaJizIoyG4gC8e0L431AgK2g3fK-maNc",    "summonerName": "Aesthetic player"}, "6": {    "accountId": "wdvD6hgqin5LK6EKbSeETT2FjGrS4uF0o-KU8OGV9WZblZQ",    "championId": "Yasuo",    "goldIncome": [        500,        500,        598,        906,        1029,        1459,        1666,        2266,        2576,        3002,        3215,        3443,        3684,        4108,        4480,        4790,        5068,        5494,        6195,        6541,        6747,        6813    ],    "lane": "TOP",    "minionsKilled": [        0,        0,        4,        13,        13,        29,        33,        49,        56,        71,        76,        82,        89,        103,        114,        120,        126,        140,        152,        154,        159,        159    ],    "participantId": 6,    "summonerId": "BEqK35F5MVQ0i-rJpTcU-aPTAaT4Cf1pFOwaOnP3934DUvw",    "summonerName": "CatOnThyRoof"}, "7": {    "accountId": "7D0N2I5MWVotN6JhBLwyCUeqr2gl4D88gh6LkCLvf-x8QPU",    "championId": "Kayn",    "goldIncome": [        500,        500,        621,        1041,        1164,        1632,        1967,        2189,        2311,        2832,        3134,        3257,        3565,        4049,        4234,        4426,        5048,        5184,        5629,        6066,        6274,        6340    ],    "lane": "JUNGLE",    "minionsKilled": [        0,        0,        0,        0,        0,        0,        0,        0,        0,        0,        0,        0,        0,        0,        0,        0,        4,        5,        6,        14,        14,        14    ],    "participantId": 7,    "summonerId": "j1wdfGHKVF2qV6zGmgpbTubM-Slz39jtaLQKgB3g_kPGkHo",    "summonerName": "Metaphor"}, "8": {    "accountId": "9-M3-ky_MWp07Hf8fY5FBkF8xUJQVfdDufL41azwost3DhU",    "championId": "Akali",    "goldIncome": [        500,        500,        984,        1514,        1829,        2204,        2532,        2836,        3213,        3677,        4333,        4633,        4904,        5119,        5919,        6273,        6858,        6980,        7195,        7554,        7803,        7890    ],    "lane": "CARRY",    "minionsKilled": [        0,        0,        3,        10,        19,        31,        40,        50,        57,        59,        70,        72,        80,        82,        92,        102,        111,        111,        114,        124,        132,        133    ],    "participantId": 8,    "summonerId": "YeRcGRcS9LEiw2H8OKL74MNKHCO-fxMivUOB38X6CWzQ8-4",    "summonerName": "TF Blade"}, "9": {    "accountId": "pVrxsCjVEVgNQfNcQona1QD-eu1fcS9_aGFlefBiHXIxfg",    "championId": "Darius",    "goldIncome": [        500,        500,        577,        885,        1099,        1347,        1582,        1774,        1924,        2308,        2507,        2714,        3089,        4070,        4428,        4760,        5010,        5223,        5580,        5850,        6167,        6233    ],    "lane": "MIDDLE",    "minionsKilled": [        0,        0,        3,        12,        17,        25,        31,        35,        37,        49,        53,        58,        69,        80,        90,        102,        107,        112,        121,        130,        137,        137    ],    "participantId": 9,    "summonerId": "msGSeabwxjSXeg5jyl37_YdAv-i4vaJuTOb9vAGRT5upq_Q",    "summonerName": "Vchee"}, "10": {    "accountId": "5XZ5b94ftOW9FO4xdfrepOyvWlWSyHRStjKPWAvROzNNMQ",    "championId": "Morgana",    "goldIncome": [        500,        500,        663,        929,        1064,        1241,        1396,        1592,        1846,        2210,        2511,        3005,        3179,        3314,        4128,        4353,        4737,        4912,        5136,        5290,        5465,        5598    ],    "lane": "SUPPORT",    "minionsKilled": [        0,        0,        0,        0,        0,        2,        2,        3,        3,        6,        6,        6,        6,        6,        6,        7,        7,        7,        7,        7,        7,        7    ],    "participantId": 10,    "summonerId": "EshGjqLRGS2JX2Cn7DEPDh4c9jjCIEpXrUER5TbVejvlphU",    "summonerName": "Synotic"}}
+{
+	"1": {
+		"accountId": "ZPs_PFiB7MCvKYnap9KIXbH8RNS3St1dAYPfrxypaV2vxQ",
+		"championId": "Vayne",
+		"goldIncome": [500, 500, 563, 913, 1190, 1389, 1750, 2061, 2611, 2847, 3290, 3571, 3763, 4907, 5086, 5392, 5864, 6404, 6825, 7340, 7838, 8591],
+		"lane": "CARRY",
+		"minionsKilled": [0, 0, 2, 13, 22, 26, 37, 48, 56, 59, 59, 65, 69, 83, 86, 91, 99, 102, 106, 122, 126, 129],
+		"participantId": 1,
+		"summonerId": "x-NJeeXfBxCCn9UcaWw26CjIAIQOBji00DQKltmEjr2aKIg",
+		"summonerName": "Johnsun"
+	},
+	"2": {
+		"accountId": "hHXHCXvhVMduVosw6G2TZ40zgabF0EquhpcZy1LTn5BFIQ",
+		"championId": "Galio",
+		"goldIncome": [500, 500, 626, 920, 1246, 1585, 2029, 2291, 2859, 3264, 4036, 4235, 4849, 5055, 5448, 6417, 6845, 7454, 8119, 8701, 9201, 9713],
+		"lane": "MIDDLE",
+		"minionsKilled": [0, 0, 6, 13, 25, 35, 47, 55, 60, 74, 82, 87, 100, 105, 118, 129, 140, 151, 161, 163, 169, 172],
+		"participantId": 2,
+		"summonerId": "-pPcbaW-B_C6XF5ey3NMy8Tpn2UjOmts1LogHAAx9gwX",
+		"summonerName": "VVanderer"
+	},
+	"3": {
+		"accountId": "uSLcGH8sDyRtlkh3vbk1sNZH3a8BQUcIRy8TMtqUnOWOpQ",
+		"championId": "Poppy",
+		"goldIncome": [500, 500, 563, 783, 1076, 1380, 1734, 1957, 2261, 2460, 2822, 3043, 3467, 3779, 4289, 4669, 5463, 5885, 6367, 6629, 7400, 7587],
+		"lane": "TOP",
+		"minionsKilled": [0, 0, 2, 8, 9, 17, 29, 32, 40, 44, 55, 60, 75, 86, 96, 103, 113, 113, 114, 115, 131, 135],
+		"participantId": 3,
+		"summonerId": "9EYom9UWXMaAZeL2nJhTAnuQlH_BKQeoY4uY6sH74USGDE8",
+		"summonerName": "Poppys Hammer"
+	},
+	"4": {
+		"accountId": "5DDWnrkDGHaQLrGFLWuvTvrWhFnXmP9zggfP79hkOyUxLw",
+		"championId": "Gragas",
+		"goldIncome": [500, 500, 621, 1055, 1934, 2216, 2601, 2809, 3164, 3651, 4345, 4876, 4999, 5861, 6145, 6584, 7152, 7340, 7798, 8270, 8880, 9467],
+		"lane": "JUNGLE",
+		"minionsKilled": [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 3, 7, 8, 11, 13, 16, 22, 23],
+		"participantId": 4,
+		"summonerId": "pR85iEjN2sno-KL3dfnjwTUICOOd94ZSse3M5OIPGSgWqzE",
+		"summonerName": "Sarcasm Orgasm"
+	},
+	"5": {
+		"accountId": "jG7tVA3DDBgiLMCef1BdPbOmN0kJEGXJ-sMD7jsBkdNsDA",
+		"championId": "Karma",
+		"goldIncome": [500, 510, 573, 727, 912, 1056, 1239, 1384, 1645, 1790, 2154, 2288, 2472, 3146, 3320, 3455, 3711, 4090, 4345, 4685, 4985, 5369],
+		"lane": "SUPPORT",
+		"minionsKilled": [0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 5, 5, 5, 5, 9, 9, 11, 12, 12, 12],
+		"participantId": 5,
+		"summonerId": "_o8p8t4_eIYkwXmKaJizIoyG4gC8e0L431AgK2g3fK-maNc",
+		"summonerName": "Aesthetic player"
+	},
+	"6": {
+		"accountId": "wdvD6hgqin5LK6EKbSeETT2FjGrS4uF0o-KU8OGV9WZblZQ",
+		"championId": "Yasuo",
+		"goldIncome": [500, 500, 598, 906, 1029, 1459, 1666, 2266, 2576, 3002, 3215, 3443, 3684, 4108, 4480, 4790, 5068, 5494, 6195, 6541, 6747, 6813],
+		"lane": "TOP",
+		"minionsKilled": [0, 0, 4, 13, 13, 29, 33, 49, 56, 71, 76, 82, 89, 103, 114, 120, 126, 140, 152, 154, 159, 159],
+		"participantId": 6,
+		"summonerId": "BEqK35F5MVQ0i-rJpTcU-aPTAaT4Cf1pFOwaOnP3934DUvw",
+		"summonerName": "CatOnThyRoof"
+	},
+	"7": {
+		"accountId": "7D0N2I5MWVotN6JhBLwyCUeqr2gl4D88gh6LkCLvf-x8QPU",
+		"championId": "Kayn",
+		"goldIncome": [500, 500, 621, 1041, 1164, 1632, 1967, 2189, 2311, 2832, 3134, 3257, 3565, 4049, 4234, 4426, 5048, 5184, 5629, 6066, 6274, 6340],
+		"lane": "JUNGLE",
+		"minionsKilled": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 6, 14, 14, 14],
+		"participantId": 7,
+		"summonerId": "j1wdfGHKVF2qV6zGmgpbTubM-Slz39jtaLQKgB3g_kPGkHo",
+		"summonerName": "Metaphor"
+	},
+	"8": {
+		"accountId": "9-M3-ky_MWp07Hf8fY5FBkF8xUJQVfdDufL41azwost3DhU",
+		"championId": "Akali",
+		"goldIncome": [500, 500, 984, 1514, 1829, 2204, 2532, 2836, 3213, 3677, 4333, 4633, 4904, 5119, 5919, 6273, 6858, 6980, 7195, 7554, 7803, 7890],
+		"lane": "CARRY",
+		"minionsKilled": [0, 0, 3, 10, 19, 31, 40, 50, 57, 59, 70, 72, 80, 82, 92, 102, 111, 111, 114, 124, 132, 133],
+		"participantId": 8,
+		"summonerId": "YeRcGRcS9LEiw2H8OKL74MNKHCO-fxMivUOB38X6CWzQ8-4",
+		"summonerName": "TF Blade"
+	},
+	"9": {
+		"accountId": "pVrxsCjVEVgNQfNcQona1QD-eu1fcS9_aGFlefBiHXIxfg",
+		"championId": "Darius",
+		"goldIncome": [500, 500, 577, 885, 1099, 1347, 1582, 1774, 1924, 2308, 2507, 2714, 3089, 4070, 4428, 4760, 5010, 5223, 5580, 5850, 6167, 6233],
+		"lane": "MIDDLE",
+		"minionsKilled": [0, 0, 3, 12, 17, 25, 31, 35, 37, 49, 53, 58, 69, 80, 90, 102, 107, 112, 121, 130, 137, 137],
+		"participantId": 9,
+		"summonerId": "msGSeabwxjSXeg5jyl37_YdAv-i4vaJuTOb9vAGRT5upq_Q",
+		"summonerName": "Vchee"
+	},
+	"10": {
+		"accountId": "5XZ5b94ftOW9FO4xdfrepOyvWlWSyHRStjKPWAvROzNNMQ",
+		"championId": "Morgana",
+		"goldIncome": [500, 500, 663, 929, 1064, 1241, 1396, 1592, 1846, 2210, 2511, 3005, 3179, 3314, 4128, 4353, 4737, 4912, 5136, 5290, 5465, 5598],
+		"lane": "SUPPORT",
+		"minionsKilled": [0, 0, 0, 0, 0, 2, 2, 3, 3, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7],
+		"participantId": 10,
+		"summonerId": "EshGjqLRGS2JX2Cn7DEPDh4c9jjCIEpXrUER5TbVejvlphU",
+		"summonerName": "Synotic"
+	}
+}

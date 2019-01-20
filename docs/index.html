@@ -426,6 +426,7 @@
     fetch('https://svadivazhagu.github.io/PyLeague/cumulativeGold.json')
         .then(result => result.text())
         .then(result => {
+            console.log(result)
             let playerData = d3.csvParse(result);
             console.log(playerData)
             svg.selectAll('legend')
