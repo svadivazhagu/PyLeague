@@ -1,2 +1,3 @@
-- Legend
-- Combine events and participant data to know where the user is.
+- Legend - FINITO
+- Combine events and participant data to know where the user is
+- Add KDA to Legend

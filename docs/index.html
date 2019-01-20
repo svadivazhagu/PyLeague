@@ -71,16 +71,17 @@
 
     }
 
-    var itemNameMap = {}
-    fetch('https://svadivazhagu.github.io/PyLeague/items.json')
-        .then(result => {
-            return result.text()
-        }).then(result => {
-            let json = JSON.parse(result);
-            itemNameMap = json;
-        })
+    // var itemNameMap = {}
+    // fetch('https://svadivazhagu.github.io/PyLeague/items.json')
+    //     .then(result => {
+    //         return result.text()
+    //     }).then(result => {
+    //         let json = JSON.parse(result);
+    //         itemNameMap = json;
+    //     })
 
     var summonerNameMap = {}
+
     fetch('https://svadivazhagu.github.io/PyLeague/participants.json')
         .then(result => result.text())
         .then(result => {
@@ -91,6 +92,7 @@
     function getSummonerName(pId) {
         return summonerNameMap[parseInt(pId)].summonerName;
     }
+
     function eventLabeler(d) {
         let date = new Date(parseInt(d.timestamp))
         var options = { minute: 'numeric', second: '2-digit' };
@@ -144,6 +146,7 @@
     }
 
     var colors = d3.scaleOrdinal(d3.schemeCategory10);
+
     var line1 = d3.line()
         .x(d => xScale(parseFloat(d.x)))
         .y(d => yScale(parseFloat(d.y)))
@@ -164,6 +167,7 @@
         .attr('fill', 'white')
 
     var good = ['WARD_PLACED', 'ELITE_MONSTER_KILL', 'BUILDING_KILL', 'CHAMPION_KILL'];
+
     var eventColor = {
         ELITE_MONSTER_KILL: 'purple',
         BUILDING_KILL: 'black',
@@ -179,6 +183,7 @@
     }
 
     var movementList = []
+
     var eventList = []
 
     // style='background-image: url("http:\\\\ddragon.leagueoflegends.com\\cdn\\6.8.1\\img\\map\\map11.png")'
@@ -322,47 +327,7 @@
                         .attr('y', (d, i) => 620 + 15 * i)
                         .text(d => d);
 
-                    svg.selectAll('legend')
-                        .data([0])
-                        .enter()
-                        .append('rect')
-                        .attr('x', 710)
-                        .attr('y', 10)
-                        .attr('width', 165)
-                        .attr('height', 230)
-                        .attr('stroke', 'black')
-                        .attr('fill', 'white')
 
-                    svg.selectAll("legendCircles")
-                        .data([1, 2, 3, 4, 5, 6, 7, 8, 9])
-                        .enter()
-                        .append('circle')
-                        .attr('class', d => 'legend')
-                        .attr('cx', 725)
-                        .attr('cy', (d, i) => 25 + i * 25)
-                        .attr('r', 10)
-                        .attr('fill', d => colors(d))
-
-                    svg.selectAll('legendText')
-                        .data([1, 2, 3, 4, 5, 6, 7, 8, 9])
-                        .enter()
-                        .append('text')
-                        .attr('class', d => 'legend')
-                        .attr('x', 740)
-                        .attr('y', (d, i) => 28 + i * 25)
-                        .text(d => getSummonerName(d))
-
-                    svg.selectAll('.legend')
-                        .on('mouseover', function (d) {
-                            highlightPlayer({
-                                participantId: d
-                            })
-                        })
-                        .on('mouseout', function (d) {
-                            unHighlightPlayer({
-                                participantId: d
-                            })
-                        })
 
 
                     svg.selectAll('teamview')
@@ -412,7 +377,6 @@
                         .text(d => d)
 
 
-
                     d3.selectAll('.hover')
                         .on('mouseover', function (d) {
                             d3.selectAll('.circle')
@@ -455,15 +419,57 @@
 
                         })
 
-
-
                 });
-
-
-
         });
 
-    
+
+    fetch('https://svadivazhagu.github.io/PyLeague/cumulativeGold.json')
+        .then(result => result.text())
+        .then(result => {
+            let playerData = d3.csvParse(result);
+            console.log(playerData)
+            svg.selectAll('legend')
+                .data([0])
+                .enter()
+                .append('rect')
+                .attr('x', 710)
+                .attr('y', 10)
+                .attr('width', 165)
+                .attr('height', 230)
+                .attr('stroke', 'black')
+                .attr('fill', 'white')
+
+            svg.selectAll("legendCircles")
+                .data([1, 2, 3, 4, 5, 6, 7, 8, 9])
+                .enter()
+                .append('circle')
+                .attr('class', d => 'legend')
+                .attr('cx', 725)
+                .attr('cy', (d, i) => 25 + i * 25)
+                .attr('r', 10)
+                .attr('fill', d => colors(d))
+
+            svg.selectAll('legendText')
+                .data([1, 2, 3, 4, 5, 6, 7, 8, 9])
+                .enter()
+                .append('text')
+                .attr('class', d => 'legend')
+                .attr('x', 740)
+                .attr('y', (d, i) => 28 + i * 25)
+                .text(d => getSummonerName(d))
+
+            svg.selectAll('.legend')
+                .on('mouseover', function (d) {
+                    highlightPlayer({
+                        participantId: d
+                    })
+                })
+                .on('mouseout', function (d) {
+                    unHighlightPlayer({
+                        participantId: d
+                    })
+                })
+        })
 
 
 </script>
