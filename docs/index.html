@@ -2,15 +2,6 @@
 <link rel="stylesheet" type="text/css" href="https://svadivazhagu.github.io/PyLeague/d3.css">
 
 <svg id='vis' class='svg-format'></svg><br />
-<div>
-    <h3>Filter Buttons</h3>
-</div>
-<div id="timebuttons" class='filter-title'>
-    Time in Minutes
-</div>
-<div id="teambuttons" class='filter-title'>
-    Team:
-</div>
 
 <script>
     d3.selection.prototype.moveToFront = function () {
@@ -146,7 +137,7 @@
         }
 
         div.html(tooltipLabel)
-            .style("left", (d3.event.pageX) + "px")
+            .style("left", (d3.event.pageX + 10) + "px")
             .style("top", (d3.event.pageY - 28) + "px");
 
 
@@ -241,13 +232,12 @@
                         .enter()
                         .append('rect')
                         .attr('x', d => timeScale(d * 60000))
-                        .attr('y', 610)
+                        .attr('y', 605)
                         .attr('width', timeScale(5 * 60000) - timeScale(0))
                         .attr('height', 70)
                         .attr('fill', 'lightgray')
                         .on('mouseover', function (d) {
                             highlightPlayer(0)
-                            console.log(d)
                             d3.selectAll('.ct' + d)
                                 .attr('fill', d => colors(d.participantId))
 
@@ -281,7 +271,6 @@
                             val = colors(parseInt(d.participantId || d.killerId || d.creatorId))
                             return val;
                         })
-                        // .attr('r', '10')
                         .on('mouseover', function (d) {
                             div.transition()
                                 .duration(50)
@@ -309,18 +298,19 @@
                         .enter()
                         .append('text')
                         .attr('x', d => timeScale(d * 60000) + 3)
-                        .attr('y', 680)
+                        .attr('y', 690)
                         .text(d => d + 'min')
                         .style('fill', 'black')
 
                     svg.selectAll('tick')
+                        .moveToFront()
                         .data([0, 5, 10, 15, 20])
                         .enter()
                         .append('line')
                         .attr('x1', d => timeScale(d * 60000))
-                        .attr('y1', 610)
+                        .attr('y1', 605)
                         .attr('x2', d => timeScale(d * 60000))
-                        .attr('y2', 680)
+                        .attr('y2', 690)
                         .attr('stroke-width', 2)
                         .attr('stroke', 'black')
 
