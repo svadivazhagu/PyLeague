@@ -39,7 +39,7 @@
 
 
     function getClass(d) {
-        let className = "p" + d.participantId + " circle " + "t" + (Math.floor(d.timestamp / 900000))
+        let className = "p" + d.participantId + " circle " + "ct" + (Math.floor(d.timestamp / 300000) * 5)
         let teamClass = parseInt(d.participantId) < 6 ? " team1" : " team2";
         className += teamClass
         return className
@@ -236,6 +236,34 @@
                         .domain([parseFloat(eventList[0].timestamp), parseFloat(eventList[eventList.length - 1].timestamp)])
                         .range([110, 700]);
 
+                    svg.selectAll('timelinebackdrop')
+                        .data([0, 5, 10, 15, 20])
+                        .enter()
+                        .append('rect')
+                        .attr('x', d => timeScale(d * 60000))
+                        .attr('y', 610)
+                        .attr('width', timeScale(5 * 60000) - timeScale(0))
+                        .attr('height', 70)
+                        .attr('fill', 'lightgray')
+                        .on('mouseover', function (d) {
+                            highlightPlayer(0)
+                            console.log(d)
+                            d3.selectAll('.ct' + d)
+                                .attr('fill', d => colors(d.participantId))
+
+                            d3.selectAll('.et' + d)
+                                .attr('stroke', d => {
+                                    val = colors(parseInt(d.participantId || d.killerId || d.creatorId))
+                                    return val;
+                                });
+
+
+                        })
+                        .on('mouseout', function (d) {
+                            unHighlightPlayer(0)
+                        });
+
+
                     svg.selectAll('timeline')
                         .data(eventList)
                         .enter()
@@ -243,7 +271,7 @@
                             return good.includes(d.type) && parseInt(d.killerId) !== 0
                         })
                         .append('line')
-                        .attr('class', d => 'event ' + d.type + ' ev' + parseInt(d.participantId || d.killerId || d.creatorId) + (parseInt(d.participantId || d.killerId || d.creatorId) < 6 ? " team1" : " team2"))
+                        .attr('class', d => 'event ' + d.type + ' ev' + parseInt(d.participantId || d.killerId || d.creatorId) + (parseInt(d.participantId || d.killerId || d.creatorId) < 6 ? " team1" : " team2") + " et" + (Math.floor(d.timestamp / 300000) * 5))
                         .attr('x1', d => timeScale(parseFloat(d.timestamp)))
                         .attr('y1', d => 635 + typeHeightMap[d.type])
                         .attr('x2', d => timeScale(parseFloat(d.timestamp)))
@@ -259,8 +287,6 @@
                                 .duration(50)
                                 .style("opacity", 1);
                             eventLabeler(d);
-
-
                             highlightPlayer({
                                 participantId: parseInt(d.participantId || d.killerId || d.creatorId)
                             })
@@ -276,7 +302,7 @@
                             unHighlightPlayer({
                                 participandId: parseInt(d.participantId || d.killerId || d.creatorId)
                             })
-                        })
+                        });
 
                     svg.selectAll('text')
                         .data([0, 5, 10, 15, 20])
@@ -447,61 +473,7 @@
 
         });
 
-    var buttons = d3.select('#timebuttons').selectAll('timePeriodButton')
-        .data(["0-15", "15-25", "25-35"])
-        .enter()
-        .append('button')
-        .attr('class', "button")
-        .text(d => d)
-        .on('click', function (d) {
-            d3.selectAll('.circle')
-                .attr('fill', 'none')
-            switch (d) {
-                case "0-15":
-                    d3.selectAll('.t0')
-                        .attr('fill', d => colors(d.participantId))
-                    break;
-                case "15-25":
-                    d3.selectAll('.t1')
-                        .attr('fill', d => colors(d.participantId))
-                    break;
-                case "25-35":
-                    d3.selectAll('.t2')
-                        .attr('fill', d => colors(d.participantId))
-                    break;
-
-            }
-        })
-
-
-    var buttons2 = d3.select('#teambuttons').selectAll('teamButtons')
-        .data(["Team 1", "Team 2"])
-        .enter()
-        .append('button')
-        .attr('class', "button")
-        .text(d => d)
-        .on('click', function (d) {
-            d3.selectAll('.circle')
-                .attr('fill', 'none')
-            d3.selectAll('.event')
-                .attr('stroke', 'none')
-            if (d === 'Team 1') {
-                d3.selectAll('.team1')
-                    .attr('fill', d => colors(d.participantId))
-                    .attr('stroke', d => colors(d.participantId || d.killerId || d.creatorId))
-            } else {
-                d3.selectAll('.team2')
-                    .attr('fill', d => colors(d.participantId))
-                    .attr('stroke', d => colors(d.participantId || d.killerId || d.creatorId))
-
-            }
-
-            d3.selectAll('.circle')
-                .attr('stroke', 'none')
-        })
-
-
-
+    
 
 
 </script>
