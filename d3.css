@@ -1,0 +1,34 @@
+.svg-format {
+    background-image:  url("http:\\\\ddragon.leagueoflegends.com\\cdn\\6.8.1\\img\\map\\map11.png"); 
+    background-size: 700px 600px;
+    background-repeat: no-repeat;
+
+    
+}
+
+.button {
+    background-color: 'white';
+    border-radius: 3px;
+    padding: 3px;
+    margin: 5px;
+    width: 100px;
+    font-size: 18px
+}
+
+div.tooltip {	
+    position: absolute;			
+    text-align: left;			
+    /* width: 100px;					
+    height: 25px;					 */
+    padding: 5px;				
+    font: 12px sans-serif;		
+    background: lightsteelblue;	
+    border: 0px;		
+    border-radius: 8px;			
+    pointer-events: none;			
+}
+
+
+.filter-title {
+    font-size: 20px
+}
